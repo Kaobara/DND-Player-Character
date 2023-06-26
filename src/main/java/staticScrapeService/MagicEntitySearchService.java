@@ -64,25 +64,6 @@ public class MagicEntitySearchService extends SearchService {
         return textContents;
     }
 
-
-    // If a page has at least 1 table in it, grab all tables and contents of the tables as a list of ContentTables
-    private ArrayList<ContentTable> getTables(String URL) {
-        HtmlPage page = gotoPage(URL);
-        List<HtmlTable> originalTables = page.getByXPath(CONTENT_TABLE_XPPATH);
-
-        // There are no tables in this page
-        if(originalTables.isEmpty()) { return null; }
-
-        ArrayList<ContentTable> tables = new ArrayList<>();
-        for(HtmlTable table : originalTables) {
-            ContentTable contentTable = new ContentTable(table);
-            tables.add(contentTable);
-        }
-        return tables;
-    }
-
-
-
     // Search up an entity based on its name. Uses above methods
     public Entity searchInfo(String entityName) {
         entityName = entityName.toLowerCase();

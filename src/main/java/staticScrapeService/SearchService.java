@@ -79,6 +79,22 @@ public abstract class SearchService {
     // Search up an entity based on its name. Uses above methods
     public abstract Entity searchInfo(String entityName);
 
+    // If a page has at least 1 table in it, grab all tables and contents of the tables as a list of ContentTables
+    protected ArrayList<ContentTable> getTables(String URL) {
+        HtmlPage page = gotoPage(URL);
+        List<HtmlTable> originalTables = page.getByXPath(CONTENT_TABLE_XPPATH);
+
+        // There are no tables in this page
+        if(originalTables.isEmpty()) { return null; }
+
+        ArrayList<ContentTable> tables = new ArrayList<>();
+        for(HtmlTable table : originalTables) {
+            ContentTable contentTable = new ContentTable(table);
+            tables.add(contentTable);
+        }
+        return tables;
+    }
+
     private void getAllLinks(HtmlPage page) {
         List<HtmlAnchor> links = page.getAnchors();
         for (HtmlAnchor link : links) {

@@ -1,14 +1,15 @@
 package staticScrapeService;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class backendSearchTester {
     // This class is primarily used to test searches
     public static void main(String[] args) throws IOException{
 
-        ClassFeatureSearch featureSearch = new ClassFeatureSearch("Barbarian");
-        ClassFeature entity = (ClassFeature) featureSearch.searchInfo("Rage");
+//        ClassFeatureSearch featureSearch = new ClassFeatureSearch("Barbarian");
+//        ClassFeature entity = (ClassFeature) featureSearch.searchInfo("Rage");
+        RaceFeaturesSearch featureSearch = new RaceFeaturesSearch();
+        RaceFeatures entity = (RaceFeatures) featureSearch.searchInfo("elf");
 //        for(String text : classFeature) {
 //            System.out.println(text);
 //        }
