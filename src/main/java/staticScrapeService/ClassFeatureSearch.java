@@ -45,23 +45,18 @@ public class ClassFeatureSearch extends SearchService {
 
                 ArrayList<String> currentHeaderRow = new ArrayList<>();
                 for (DomNode node : nodes) {
-                    System.out.println("Current num COlumns: " + numColumns);
                     currentHeaderRow.add(node.getTextContent());
-                    System.out.println(node.getTextContent());
 
                     if(node.getTextContent().equalsIgnoreCase("features")) featureColumn = numColumns;
                     numColumns++;
                 }
 
                 level = 1;
-//                headers.add(currentHeaderRow);
-                System.out.println("This happened");
                 continue;
             }
 
             // Every other row
             ArrayList<String> currentRow = new ArrayList<>();
-            System.out.println("feature Column is: " + featureColumn);
 
             // Cell per row
             for(final HtmlTableCell cell : row.getCells()) {
@@ -73,10 +68,8 @@ public class ClassFeatureSearch extends SearchService {
                     levelFeatureMap.put(level, featureNames);
                     for(String featureName : featureNames) {
                         features.add( WordUtils.capitalizeFully(featureName));
-                        System.out.println("Current Level: "+level);
                         featureLevelMap.put(featureName.toLowerCase(), level);
                     }
-                    System.out.println(cell.getTextContent());
                     currentRow.add(cell.getTextContent());
 
                 }
@@ -87,12 +80,6 @@ public class ClassFeatureSearch extends SearchService {
                 firstLoop = false;
             }
             rowContents.add(currentRow);
-        }
-
-        for(int classLevel : levelFeatureMap.keySet()) {
-            for(String featureName : levelFeatureMap.get(classLevel)) {
-                System.out.println("feature: " + featureName + " level: "+ classLevel);
-            }
         }
 //        return classTable;
         return features;

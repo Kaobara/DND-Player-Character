@@ -28,11 +28,11 @@ public class RaceFeaturesSearch extends SearchService {
             }
         };
 
-        for(String raceNames:listOfRaces) {
-            System.out.println(raceNames);
-        }
-
         return listOfRaces;
+    }
+
+    public ArrayList<String> getListOfRaces() {
+        return entityList;
     }
 
     private ArrayList<String> getRaceContent(String URL, String elementId, String featureName) {
