@@ -11,7 +11,8 @@ public class SpellFactory extends EntityFactory {
     public Spell createEmptyEntity() { return new Spell(); }
 
 
-    public Spell createEntity(String spellName, ArrayList<String> fullContent, ArrayList<ContentTable> tables) {
+    public Spell createEntity(String spellName, ArrayList<String> fullContent, ArrayList<ContentTable> tables,
+                              String additionalInfo, int additionalIntInfo) {
         // Split source, levelSchool, metadata, and spellList into separate categories
         String source = fullContent.remove(TOP_I).replaceFirst("Source: ", "");
         String levelSchool = fullContent.remove(TOP_I);

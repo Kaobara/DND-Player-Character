@@ -7,22 +7,23 @@ public class backendSearchTester {
     // This class is primarily used to test searches
     public static void main(String[] args) throws IOException{
 
-        ClassFeatureSearch featureSearch = new ClassFeatureSearch();
-        ArrayList<String> classFeature = featureSearch.searchFeatureInfo("Primal Path");
-        for(String text : classFeature) {
-            System.out.println(text);
-        }
+        ClassFeatureSearch featureSearch = new ClassFeatureSearch("Barbarian");
+        ClassFeature entity = (ClassFeature) featureSearch.searchInfo("Rage");
+//        for(String text : classFeature) {
+//            System.out.println(text);
+//        }
 //
 //        EntitySearch service = new EntitySearch();
 //
 //        SpellSearch spellSearch = new SpellSearch();
 //        ItemSearch itemSearch = new ItemSearch();
-////        Item entity = (Item) itemSearch.searchEntityInfo("Potion of Healing");
-//        Spell entity = (Spell) spellSearch.searchEntityInfo("Wish");
+//        Item entity = (Item) itemSearch.searchInfo("Potion of Healing");
+//        Spell entity = (Spell) spellSearch.searchInfo("Wish");
 //
-//        for(String desct : entity.getDescSections()) {
-//            System.out.println(desct);
-//        }
+        for(String desct : entity.getDescSections()) {
+            System.out.println(desct);
+        }
+//        entity.getDescSections();
 //        if(entity.isHasTable()){
 //            System.out.println(entity.getTableContent(0));
 //        }

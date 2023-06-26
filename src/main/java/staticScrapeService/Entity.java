@@ -1,5 +1,6 @@
 package staticScrapeService;
 
+import java.sql.Array;
 import java.util.ArrayList;
 
 public class Entity {
@@ -103,6 +104,8 @@ public class Entity {
     }
 
     public ArrayList<String> getDescSections() {
+        if(empty) {return new ArrayList<>(); }
+
         if (!descInitialized) {
             buildDescriptionSections();
         }

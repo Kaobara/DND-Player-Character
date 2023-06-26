@@ -1,20 +1,21 @@
 package staticScrapeService;
 
 import com.gargoylesoftware.htmlunit.html.*;
+import org.apache.commons.text.WordUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ClassFeatureSearch extends FeatureSearch{
+public class ClassFeatureSearch extends FeatureSearchService {
     //    Sets up the EntitySearch to be Item specific
-    HashMap<Integer, String[]> levelFeatureMap = new HashMap<>();
 
-    public ClassFeatureSearch() {
-        super.ENTITY_URL_HREF = "/sorcerer";
-        super.ENTITY_LIST_URL = "http://dnd5e.wikidot.com/sorcerer";
-        super.entityList = getListOfClassFeatures(WIKIDOT_URL + ENTITY_URL_HREF);
-//        super.entityFactory = new ItemFactory();
+
+    public ClassFeatureSearch(String className) {
+        super.ENTITY_URL_HREF = "/" + className.toLowerCase();
+        HtmlPage classFeatureListPage = super.gotoPage(WIKIDOT_URL + ENTITY_URL_HREF);
+        super.entityList = getListOfEntities(classFeatureListPage, "class feature");
+        super.entityFactory = new ClassFeatureFactory();
 //        HtmlPage itemListPage = super.gotoPage(ENTITY_LIST_URL);
 //        super.entityList = getListofEntities(itemListPage, "Item");
 
@@ -25,8 +26,7 @@ public class ClassFeatureSearch extends FeatureSearch{
 
     }
 
-    private ArrayList<String> getListOfClassFeatures(String URL) {
-        HtmlPage page = gotoPage(URL);
+    protected ArrayList<String> getListOfClassFeatures(HtmlPage page) {
         List<HtmlTable> originalTables = page.getByXPath(super.CONTENT_TABLE_XPPATH);
 
         // There are no tables in this page
@@ -75,11 +75,12 @@ public class ClassFeatureSearch extends FeatureSearch{
 
 //                System.out.println("current column: " + currentColumn);
                 if(featureColumn != -1 && !cell.getTextContent().isEmpty() && currentColumn == featureColumn) {
-                    String[] featureNames = cell.getTextContent().split(", ");
+                    String[] featureNames = cell.getTextContent().toLowerCase().split(", ");
+                    levelFeatureMap.put(level, featureNames);
                     for(String featureName : featureNames) {
-                        features.add(featureName);
+                        features.add( WordUtils.capitalizeFully(featureName));
                         System.out.println("Current Level: "+level);
-                        levelFeatureMap.put(level, featureNames);
+                        featureLevelMap.put(featureName.toLowerCase(), level);
                     }
                     System.out.println(cell.getTextContent());
                     currentRow.add(cell.getTextContent());
@@ -103,4 +104,5 @@ public class ClassFeatureSearch extends FeatureSearch{
         return features;
 
     }
+
 }

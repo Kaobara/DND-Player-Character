@@ -2,7 +2,7 @@ package staticScrapeService;
 
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
-public class ItemSearch extends EntitySearch {
+public class ItemSearch extends MagicEntitySearchService {
 
 //    Sets up the EntitySearch to be Item specific
     public ItemSearch() {
@@ -10,7 +10,7 @@ public class ItemSearch extends EntitySearch {
         super.ENTITY_LIST_URL = "http://dnd5e.wikidot.com/wondrous-items";
         super.entityFactory = new ItemFactory();
         HtmlPage itemListPage = super.gotoPage(ENTITY_LIST_URL);
-        super.entityList = getListofEntities(itemListPage, "Item");
+        super.entityList = this.getListOfEntities(itemListPage, "Item");
     }
 
 }

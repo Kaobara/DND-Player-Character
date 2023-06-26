@@ -6,7 +6,8 @@ public abstract class EntityFactory {
     final protected int TOP_I = 0;
     final protected int BOTTOM_I = -1;
 
-    public abstract Entity createEntity(String entityName, ArrayList<String> fullContent, ArrayList<ContentTable> tables);
+    public abstract Entity createEntity(String entityName, ArrayList<String> fullContent, ArrayList<ContentTable> tables
+            , String additionalStrInfo, int additionalIntInfo);
 
     protected abstract Entity createEmptyEntity();
 
