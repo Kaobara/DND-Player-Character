@@ -99,6 +99,8 @@ public class Entity {
         return tables;
     }
 
+    public String getDescription() { return description; }
+
     public boolean isHasTable() {
         return hasTable;
     }

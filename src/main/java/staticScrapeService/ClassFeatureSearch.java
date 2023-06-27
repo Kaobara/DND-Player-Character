@@ -20,6 +20,18 @@ public class ClassFeatureSearch extends SearchService {
         super.entityFactory = new ClassFeatureFactory();
     }
 
+    public ArrayList<String> getAllFeatures() {
+        return super.entityList;
+    }
+
+    public HashMap<Integer, String[]> getLevelFeatureMap() {
+        return levelFeatureMap;
+    }
+
+    public HashMap<String, Integer> getFeatureLevelMap() {
+        return featureLevelMap;
+    }
+
     protected ArrayList<String> getListOfFeatures(HtmlPage page) {
         List<HtmlTable> originalTables = page.getByXPath(super.CONTENT_TABLE_XPPATH);
 

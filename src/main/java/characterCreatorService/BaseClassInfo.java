@@ -1,11 +1,9 @@
 package characterCreatorService;
 
-import staticScrapeService.ClassFeatureSearch;
-
 import java.util.ArrayList;
 
 public class BaseClassInfo {
-    private final ArrayList<String> listOfClasses = new ArrayList<String>() {
+    private final ArrayList<String> classList = new ArrayList<String>() {
         {
             add("artificer");
             add("barbarian");
@@ -21,16 +19,28 @@ public class BaseClassInfo {
             add("warlock");
         }
     };
+
+    private final ArrayList<String> SPELLCAST_FEAT = new ArrayList<String>() {
+        {
+            add("spellcasting");
+            add("pact magic");
+        }
+    };
+
+
+
     public void printClassList() {
-        for(String className : listOfClasses) {
+        for(String className : classList) {
             System.out.println(className);
         }
     }
 
     public boolean checkClass(String className) {
-        if(listOfClasses.contains(className.toLowerCase())) {
+        if(classList.contains(className.toLowerCase())) {
             return true;
         }
         return false;
     }
+
+    public ArrayList<String> getSpellcastFeats() {return SPELLCAST_FEAT; }
 }
