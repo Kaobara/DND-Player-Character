@@ -6,11 +6,16 @@ import org.apache.commons.text.WordUtils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class ClassFeatureSearch extends SearchService {
     protected String FEATURE_SOURCE_NAME;
     protected HashMap<Integer, String[]> levelFeatureMap = new HashMap<>();
     protected HashMap<String, Integer> featureLevelMap = new HashMap<>();
+    private final Pattern EXTRA_CLASS_REGEX_PATTERN = Pattern.compile("( \\((x|X)\\d\\))" +
+            "|( \\(\\d\\w\\w level\\))" +
+            "|( \\(d\\d\\))" +
+            "|( \\(CR .*\\))");
 
     public ClassFeatureSearch(String className) {
         FEATURE_SOURCE_NAME = className.toLowerCase();
@@ -77,6 +82,10 @@ public class ClassFeatureSearch extends SearchService {
 //                System.out.println("current column: " + currentColumn);
                 if(featureColumn != -1 && !cell.getTextContent().isEmpty() && currentColumn == featureColumn) {
                     String[] featureNames = cell.getTextContent().toLowerCase().split(", ");
+                    for(int i = 0; i <featureNames.length; i++) {
+                        featureNames[i] = featureNames[i].replaceAll(EXTRA_CLASS_REGEX_PATTERN.toString(), "");
+                    }
+
                     levelFeatureMap.put(level, featureNames);
                     for(String featureName : featureNames) {
                         features.add( WordUtils.capitalizeFully(featureName));

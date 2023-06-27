@@ -36,11 +36,12 @@ public class Race {
     }
 
     public void printRaceFeatures() {
-        System.out.println(this.raceName.toUpperCase() + "\n");
         System.out.println(raceFeatures.getDescription());
     }
 
-
+    public String getRaceName() {
+        return raceName;
+    }
 
     public RaceFeatures getRaceFeatures() {
         if(!isSet) return null;

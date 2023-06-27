@@ -54,10 +54,25 @@ public class CharacterCreationEvents {
         PlayerCharacter playerCharacter = new PlayerCharacter(name, new Race(raceName));
 
         playerCharacter = buildBaseClass(playerCharacter);
-        playerCharacter = buildBaseClass(playerCharacter);
 
-        playerCharacter.printCharacterDescription();
 
+        while(true) {
+            System.out.println("Would you like to add more levels of another class? (Y/N)");
+            String multiclassBool = inputScanner.nextLine();
+            if(multiclassBool.equalsIgnoreCase("N")) {
+                break;
+            } else if (multiclassBool.equalsIgnoreCase("Y")) {
+                playerCharacter = buildBaseClass(playerCharacter);
+                inputScanner.nextLine();
+            } else {
+                System.out.println("Invalid Input. Please try again");
+            }
+        }
+
+
+
+//        playerCharacter.printCharacterDescriptionFull();
+        playerCharacter.printCharacterDescriptionSummary();
         return playerCharacter;
     }
 

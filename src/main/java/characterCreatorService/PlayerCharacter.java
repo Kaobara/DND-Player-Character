@@ -1,5 +1,6 @@
 package characterCreatorService;
 
+import org.apache.commons.text.WordUtils;
 import staticScrapeService.Item;
 import staticScrapeService.Spell;
 
@@ -75,13 +76,27 @@ public class PlayerCharacter {
         return name;
     }
 
-    public void printCharacterDescription() {
-        System.out.println(name.toUpperCase());
+    public void printCharacterDescriptionFull() {
+        System.out.println(WordUtils.capitalizeFully(name));
         race.printRaceFeatures();
         System.out.println("");
         for(BaseClass baseClass : classes) {
             baseClass.printAllCurrentClassFeatures();
         }
+    }
+
+    public void printCharacterDescriptionSummary() {
+        System.out.print(WordUtils.capitalizeFully(name) + " is a ");
+        for(int i=0; i<classes.size(); i++) {
+            BaseClass baseClass = classes.get(i);
+            System.out.print("level " + baseClass.getClassLevel() + " " + WordUtils.capitalizeFully(baseClass.getClassName()));
+            if(i+3 <= classes.size()) {
+                System.out.print(", ");
+            } else if(i+2 == classes.size()) {
+                System.out.print(" and ");
+            }
+        }
+        System.out.println(" " + WordUtils.capitalizeFully(race.getRaceName()) + " for a total of " + totalLevels + " levels");
 
     }
 }

@@ -1,5 +1,6 @@
 package characterCreatorService;
 
+import org.apache.commons.text.WordUtils;
 import staticScrapeService.ClassFeature;
 import staticScrapeService.ClassFeatureSearch;
 
@@ -40,7 +41,7 @@ public class BaseClass {
     }
 
     public void printAllCurrentClassFeatures() {
-        System.out.println("LEVEL " + classLevel + " " + className.toUpperCase() + "\n");
+        System.out.println("Level " + classLevel + " " + WordUtils.capitalizeFully(className) + "\n");
         for(ClassFeature classFeature : features) {
             System.out.println(classFeature.getName().toUpperCase());
             System.out.println(classFeature.getDescription() + "\n");
