@@ -14,9 +14,8 @@ import java.util.Scanner;
 public class CharacterCreationEvents {
     private BaseClassInfo baseClassInfo = new BaseClassInfo();
     private Scanner inputScanner = new Scanner(System.in);
-    private final String channelDataDirectory = "DataStorage/savedCharacters.json";
-    private final JSONCharacterWriter jsonCharacterWriter = new JSONCharacterWriter();
-
+    private CharacterCreationSaveFileEvents PCSaveFileEvents = new CharacterCreationSaveFileEvents();
+    
     public ProgramState bootUp() {
         ProgramState programState;
         while(true) {
@@ -118,7 +117,7 @@ public class CharacterCreationEvents {
             if(multiclassBool.equalsIgnoreCase("N")) {
                 break;
             } else if (multiclassBool.equalsIgnoreCase("Y")) {
-                savePlayerCharacter(playerCharacter);
+                PCSaveFileEvents.savePlayerCharacter(playerCharacter);
                 System.out.println(playerCharacter.getName() + " saved.");
                 break;
             } else {
@@ -129,7 +128,7 @@ public class CharacterCreationEvents {
     }
 
     public PlayerCharacter chooseSavedCharacter() throws IOException {
-        ArrayList<PCJSONSkeleton> savedCharacters = loadSavedPlayerCharacters();
+        ArrayList<PCJSONSkeleton> savedCharacters = PCSaveFileEvents.loadSavedPlayerCharacters();
         if(savedCharacters.isEmpty()) {
             System.out.println("There are no characters currently saved. Please make and save a new character.");
             return null;
@@ -250,25 +249,5 @@ public class CharacterCreationEvents {
         return playerCharacter;
     }
 
-    public void savePlayerCharacter(PlayerCharacter playerCharacter) throws IOException {
-        File file = new File(channelDataDirectory);
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode rootNode = objectMapper.readTree(file);
-        PCJSONSkeleton pcjsonSkeleton = playerCharacter.createPCJSONSkeleton();
-        jsonCharacterWriter.addCharacterToFile(file, rootNode, pcjsonSkeleton);
-    }
 
-    public ArrayList<PCJSONSkeleton> loadSavedPlayerCharacters() throws IOException {
-        ArrayList<PCJSONSkeleton> pcjsonSkeletons = new ArrayList<>();
-        File file = new File(channelDataDirectory);
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        ArrayList<JsonNode> characterNodes = jsonCharacterWriter.getCharacterNodes(file);
-        for(JsonNode characterNode : characterNodes) {
-            pcjsonSkeletons.add(objectMapper.readValue(characterNode.toPrettyString(), PCJSONSkeleton.class));
-            System.out.println(characterNode.toPrettyString());
-        }
-
-        return pcjsonSkeletons;
-    }
 }

@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class JSONCharacterWriter {
-    final String channelDataDirectory = "DataStorage/savedCharacters.json";
-
     public JsonNode characterExists(File file, String playerCharacterID) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode rootNode = mapper.readTree(file);
