@@ -17,7 +17,7 @@ public class BaseClass {
     private ArrayList<ClassFeature> features = new ArrayList<>();
 
     public BaseClass(String className, int classLevel) {
-        this.className = className;
+        this.className = WordUtils.capitalizeFully(className);
         this.classLevel = classLevel;
         this.classFeatureSearch = new ClassFeatureSearch(className);
 
@@ -33,6 +33,8 @@ public class BaseClass {
     private void addLevelFeaturesToClass(int currentLevel) {
         HashMap<Integer, String[]> levelFeatureMap =  classFeatureSearch.getLevelFeatureMap();
         for(int i = currentLevel+1; i<=classLevel; i++) {
+            if(!levelFeatureMap.containsKey(i)) continue;
+
             String[] featuresInLevel = levelFeatureMap.get(i);
             for(String feature : featuresInLevel) {
                 features.add((ClassFeature) classFeatureSearch.searchInfo(feature));

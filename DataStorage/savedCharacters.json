@@ -1,0 +1,10 @@
+[ {
+  "uniqueID" : "dbbbe529-6379-4f05-ab0c-5511f211d5f9",
+  "name" : "Alexa Iris",
+  "totalLevels" : 8,
+  "raceName" : "Human",
+  "classLevels" : {
+    "Fighter" : 5,
+    "Barbarian" : 3
+  }
+} ]

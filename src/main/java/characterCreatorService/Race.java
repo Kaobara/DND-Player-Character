@@ -1,5 +1,6 @@
 package characterCreatorService;
 
+import org.apache.commons.text.WordUtils;
 import staticScrapeService.RaceFeatures;
 import staticScrapeService.RaceFeaturesSearch;
 
@@ -18,7 +19,7 @@ public class Race {
     public Race(String raceName) {
         isSet = true;
         raceList = raceFeaturesSearch.getListOfRaces();
-        this.raceName = raceName;
+        this.raceName = WordUtils.capitalizeFully(raceName);
         raceFeatures = (RaceFeatures) raceFeaturesSearch.searchInfo(raceName);
     }
 

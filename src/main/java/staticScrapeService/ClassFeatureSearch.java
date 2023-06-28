@@ -15,7 +15,8 @@ public class ClassFeatureSearch extends SearchService {
     private final Pattern EXTRA_CLASS_REGEX_PATTERN = Pattern.compile("( \\((x|X)\\d\\))" +
             "|( \\(\\d\\w\\w level\\))" +
             "|( \\(d\\d\\))" +
-            "|( \\(CR .*\\))");
+            "|( \\(CR .*\\))" +
+            "|( feature)");
 
     public ClassFeatureSearch(String className) {
         FEATURE_SOURCE_NAME = className.toLowerCase();

@@ -4,21 +4,75 @@ import org.apache.commons.text.WordUtils;
 import staticScrapeService.Item;
 import staticScrapeService.Spell;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class PlayerCharacter {
+    private String uniqueID;
+    private String name;
+    private int totalLevels = 0;
+    private Race race;
     private ArrayList<BaseClass> classes = new ArrayList<>();
     private ArrayList<String> classNames = new ArrayList<>();
-    private Race race;
+    private HashMap<String, Integer> classLevels= new HashMap<>();
     private ArrayList<Spell> spells;
     private ArrayList<Item> items;
-    private int totalLevels = 0;
-    private String name;
+
+    public String getUniqueID () {
+        return uniqueID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getTotalLevels() {
+        return totalLevels;
+    }
+
+    public String getRaceName() {
+        return race.getRaceName();
+    }
+
+    public ArrayList<String> getClassNames() {
+        return classNames;
+    }
+
+    public HashMap<String, Integer> getClassLevels() {
+        return classLevels;
+    }
+
+    private Race getRace() {
+        return race;
+    }
+
+    public int getLevelInClass(String className) {
+        int baseClassIndex = getClassIndexInList(className);
+        if (baseClassIndex == -1) return -1;
+        return classes.get(baseClassIndex).getClassLevel();
+    }
 
     public PlayerCharacter(String name, Race race) {
-        this.name = name;
+        this.name = WordUtils.capitalizeFully(name);
         this.race = race;
+        this.uniqueID = UUID.randomUUID().toString();
+    }
+
+    public PlayerCharacter(PCJSONSkeleton pcjsonSkeleton) {
+        this.uniqueID = pcjsonSkeleton.getUniqueID();
+        this.name = pcjsonSkeleton.getName();
+        this.totalLevels = pcjsonSkeleton.getTotalLevels();
+        this.race = new Race(pcjsonSkeleton.getRaceName());
+        this.classLevels = pcjsonSkeleton.getClassLevels();
+        for(String className : classLevels.keySet()) {
+            this.classNames.add(className);
+            classes.add(new BaseClass(className, classLevels.get(className)));
+        }
+    }
+
+    public PCJSONSkeleton createPCJSONSkeleton() {
+        return new PCJSONSkeleton(uniqueID, name, totalLevels, race.getRaceName(), classLevels);
     }
 
     public void giveCharacterBaseClass(BaseClass baseClass) {
@@ -27,6 +81,7 @@ public class PlayerCharacter {
         }
         classes.add(baseClass);
         classNames.add(baseClass.getClassName());
+        setClassLevels(baseClass);
         totalLevels += baseClass.getClassLevel();
     }
 
@@ -35,22 +90,9 @@ public class PlayerCharacter {
         if(baseClassIndex == -1) return;
 
         classes.get(baseClassIndex).levelUpClass(classLevelIncrease);
+        setClassLevels(classes.get(baseClassIndex));
 
         totalLevels+=classLevelIncrease;
-    }
-
-    public Race getRace() {
-        return race;
-    }
-
-    public ArrayList<String> getClassNames() {
-        return classNames;
-    }
-
-    public int getLevelInClass(String className) {
-        int baseClassIndex = getClassIndexInList(className);
-        if (baseClassIndex == -1) return -1;
-        return classes.get(baseClassIndex).getClassLevel();
     }
 
     private int getClassIndexInList(String className) {
@@ -68,21 +110,8 @@ public class PlayerCharacter {
         return -1;
     }
 
-    public int getTotalLevels() {
-        return totalLevels;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void printCharacterDescriptionFull() {
-        System.out.println(WordUtils.capitalizeFully(name));
-        race.printRaceFeatures();
-        System.out.println("");
-        for(BaseClass baseClass : classes) {
-            baseClass.printAllCurrentClassFeatures();
-        }
+    private void setClassLevels(BaseClass baseClass) {
+        classLevels.put(baseClass.getClassName(), baseClass.getClassLevel());
     }
 
     public void printCharacterDescriptionSummary() {
@@ -99,4 +128,17 @@ public class PlayerCharacter {
         System.out.println(" " + WordUtils.capitalizeFully(race.getRaceName()) + " for a total of " + totalLevels + " levels");
 
     }
+
+    public void printCharacterDescriptionFull() {
+        System.out.println(WordUtils.capitalizeFully(name));
+        race.printRaceFeatures();
+        System.out.println("");
+        for(BaseClass baseClass : classes) {
+            baseClass.printAllCurrentClassFeatures();
+        }
+    }
+
+
+
+
 }
