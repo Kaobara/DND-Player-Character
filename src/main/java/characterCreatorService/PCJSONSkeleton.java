@@ -19,18 +19,20 @@ public class PCJSONSkeleton {
 
     public PCJSONSkeleton() {}
 
-    public PCJSONSkeleton(String uniqueID, String name, int totalLevels, String raceName, HashMap<String, Integer> classLevels) {
+    public PCJSONSkeleton(String uniqueID, String name, int totalLevels, String raceName, HashMap<String,
+            Integer> classLevels, ArrayList<String> spellNames, ArrayList<String> itemNames) {
         this.uniqueID = uniqueID;
         this.name = name;
         this.totalLevels = totalLevels;
         this.raceName = raceName;
         this.classLevels = classLevels;
+        this.spellNames = spellNames;
+        this.itemNames = itemNames;
     }
 
     public String getUniqueID () {
         return uniqueID;
     }
-
     public void setUniqueID(String uniqueID) {
         this.uniqueID = uniqueID;
     }
@@ -38,7 +40,6 @@ public class PCJSONSkeleton {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -46,26 +47,21 @@ public class PCJSONSkeleton {
     public int getTotalLevels() {
         return totalLevels;
     }
-
     public void setTotalLevels(int totalLevels) {
         this.totalLevels = totalLevels;
     }
 
-    public String getRaceName() {
-        return raceName;
-    }
+    public String getRaceName() { return raceName; }
+    public void setRace(String raceName) { this.raceName = raceName; }
 
-    public void setRace(String raceName) {
-        this.raceName = raceName;
-    }
+    public HashMap<String, Integer> getClassLevels() { return classLevels; }
+    public void setClassLevels(HashMap<String, Integer> classLevels) { this.classLevels = classLevels; }
 
-    public HashMap<String, Integer> getClassLevels() {
-        return classLevels;
-    }
+    public ArrayList<String> getSpellNames() { return spellNames; }
+    public void setSpellNames(ArrayList<String> SpellNames) { this.spellNames = spellNames; }
 
-    public void setClassLevels(HashMap<String, Integer> classLevels) {
-        this.classLevels = classLevels;
-    }
+    public ArrayList<String> getItemNames() { return itemNames; }
+    public void setItemNames(ArrayList<String> itemNames) { this.itemNames = itemNames; }
 
     public void printPCDescription() {
         System.out.print(this.name + " " + this.raceName + " ");

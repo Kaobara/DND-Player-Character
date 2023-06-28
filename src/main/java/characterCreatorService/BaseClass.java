@@ -16,16 +16,26 @@ public class BaseClass {
     private boolean isSpellCaster = false;
     private ArrayList<ClassFeature> features = new ArrayList<>();
 
+    public boolean getIsSpellCaster() { return isSpellCaster; }
+
+    private void checkIsSpellCaster() {
+        for(String spellCastFeat : baseClassInfo.getSpellcastFeats()) {
+            if(classFeatureSearch.getAllFeatures().contains(spellCastFeat)) {
+                System.out.println(className + " is a spell casting class.");
+                isSpellCaster = true;
+                return;
+            }
+        }
+        System.out.println(className + " is not a spell casting class.");
+        isSpellCaster = false;
+    }
+
     public BaseClass(String className, int classLevel) {
         this.className = WordUtils.capitalizeFully(className);
         this.classLevel = classLevel;
         this.classFeatureSearch = new ClassFeatureSearch(className);
 
-        for(String spellCastFeat : baseClassInfo.getSpellcastFeats()) {
-            if(classFeatureSearch.getAllFeatures().contains(spellCastFeat)) {
-                isSpellCaster = true;
-            }
-        }
+        checkIsSpellCaster();
 
         addLevelFeaturesToClass(0);
     }

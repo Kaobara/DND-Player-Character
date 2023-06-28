@@ -37,6 +37,7 @@ public class Race {
     }
 
     public void printRaceFeatures() {
+        System.out.println(raceName.toUpperCase());
         System.out.println(raceFeatures.getDescription());
     }
 

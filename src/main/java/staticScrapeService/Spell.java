@@ -1,8 +1,11 @@
 package staticScrapeService;
 
+import java.util.ArrayList;
+
 public class Spell extends Entity {
     private String levelSchool, metadata, spellList, upcast = "";
     private boolean ritual = false, concentration = false, canUpcastBool = false;
+    private ArrayList<String> availableClasses = new ArrayList<>();
 
     public Spell() {
         super();
@@ -21,6 +24,15 @@ public class Spell extends Entity {
         if(metadata.contains("concentration")) { concentration = true; }
 
         this.spellList = spellList;
+        separateSpellList();
+    }
+
+    private void separateSpellList() {
+        String availableClassesStr = spellList.replaceAll("Spell Lists. ", "");
+        String[] availableClassesArr = availableClassesStr.split(", ");
+        for(String className : availableClassesArr) {
+            availableClasses.add(className);
+        }
     }
 
     public String getMetadata() { return  metadata; }
@@ -34,6 +46,8 @@ public class Spell extends Entity {
     public String getSpellList() {
         return spellList;
     }
+
+    public ArrayList<String> getAvailableClasses() { return availableClasses; }
 
     public boolean canUpcast() {
         return canUpcastBool;

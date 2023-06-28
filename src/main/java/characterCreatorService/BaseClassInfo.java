@@ -22,12 +22,10 @@ public class BaseClassInfo {
 
     private final ArrayList<String> SPELLCAST_FEAT = new ArrayList<String>() {
         {
-            add("spellcasting");
-            add("pact magic");
+            add("Spellcasting");
+            add("Pact Magic");
         }
     };
-
-
 
     public void printClassList() {
         for(String className : classList) {

@@ -71,7 +71,6 @@ public class CharacterCreationEvents {
     public PlayerCharacter buildNewCharacter() throws IOException {
         // Name
         System.out.println("Please choose a name");
-        inputScanner.nextLine();
         String name = inputScanner.nextLine();
         System.out.println("You chose the name: " + name);
 
@@ -124,7 +123,7 @@ public class CharacterCreationEvents {
                 if (chosenCharacterIndex > -1 && chosenCharacterIndex < savedCharacters.size()) {
                     System.out.print("You chose: ");
                     savedCharacters.get(chosenCharacterIndex).printPCDescription();
-                    System.out.println("Please wait a moment as we are loading up your character...");
+                    System.out.println("Please wait a moment as we load up your character...");
 
                     playerCharacter = new PlayerCharacter(savedCharacters.get(chosenCharacterIndex));
                     break;

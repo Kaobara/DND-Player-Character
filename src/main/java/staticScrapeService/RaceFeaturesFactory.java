@@ -8,6 +8,7 @@ public class RaceFeaturesFactory extends EntityFactory {
 
     public RaceFeatures createEntity(String raceName, ArrayList<String> fullContent, ArrayList<ContentTable> tables,
                                      String additionalStrInfo, int additionalIntInfo) {
+        fullContent.remove(TOP_I);
         String description = getDescription(fullContent);
         RaceFeatures raceFeature = new RaceFeatures(raceName, "", null, -1, description);
         return raceFeature;

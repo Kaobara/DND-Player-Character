@@ -2,6 +2,8 @@ package staticScrapeService;
 
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
+import java.util.ArrayList;
+
 public class SpellSearch extends MagicEntitySearchService {
 
     // Sets up the EntitySearch to be Spell specific
@@ -12,4 +14,6 @@ public class SpellSearch extends MagicEntitySearchService {
         HtmlPage spellListPage = super.gotoPage(ENTITY_LIST_URL);
         super.entityList = this.getListOfEntities(spellListPage, "Spell");
     }
+
+    public ArrayList<String> getSpellList() { return super.entityList; }
 }

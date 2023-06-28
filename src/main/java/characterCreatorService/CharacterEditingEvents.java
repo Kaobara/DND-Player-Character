@@ -1,5 +1,9 @@
 package characterCreatorService;
 
+import org.apache.commons.text.WordUtils;
+import staticScrapeService.ItemSearch;
+import staticScrapeService.SpellSearch;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -9,6 +13,8 @@ public class CharacterEditingEvents {
     private BaseClassInfo baseClassInfo = new BaseClassInfo();
     private Scanner inputScanner = new Scanner(System.in);
     private CharacterCreationSaveFileEvents PCSaveFileEvents = new CharacterCreationSaveFileEvents();
+    private SpellSearch spellSearch = new SpellSearch();
+    private ItemSearch itemSearch = new ItemSearch();
 
     public PlayerCharacter editSavedCharacter(PlayerCharacter playerCharacter) throws IOException {
         int editOption = -1;
@@ -45,8 +51,10 @@ public class CharacterEditingEvents {
                     playerCharacter = buildBaseClass(playerCharacter);
                     saveOption = true;
                     break;
-                    case 7: case 8:
-                    editPCName(playerCharacter);
+                    case 7:
+                case 8:
+                    playerCharacter = addSpellToCharacter(playerCharacter);
+                    saveOption = true;
                     break;
                 case 9:
                     editPCName(playerCharacter);
@@ -100,13 +108,12 @@ public class CharacterEditingEvents {
                 inputScanner.nextLine();
             }
         }
-
+        inputScanner.nextLine();
         return editOption;
     }
 
     public Race buildRace() {
         System.out.println("Please choose a race. The available races are: ");
-        inputScanner.nextLine();
         Race race = new Race();
         race.printRaceList();
         String raceName;
@@ -233,6 +240,27 @@ public class CharacterEditingEvents {
             }
         }
 
+        return playerCharacter;
+    }
+
+    private PlayerCharacter addSpellToCharacter(PlayerCharacter playerCharacter) {
+
+        while(true) {
+            System.out.println("What spell would you like to add? Some spells include:" +
+                    "\n- Eldritch Blast\n- Fire Bolt\n- Bless\n- Vicious Mockery\n- Fireball" +
+                    "\n- Mage Hand\n- Speak with Animals\n -etc.");
+            inputScanner.nextLine();
+            String spellName = inputScanner.nextLine();
+            spellName = spellName.toLowerCase();
+            spellName = WordUtils.capitalizeFully(spellName);
+
+            if(spellSearch.getSpellList().contains(spellName)) {
+                playerCharacter.addSpell(spellName);
+                break;
+            } else {
+                System.out.println("Invalid Input. Please try again");
+            }
+        }
         return playerCharacter;
     }
 

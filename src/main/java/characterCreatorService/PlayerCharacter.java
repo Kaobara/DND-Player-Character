@@ -2,8 +2,11 @@ package characterCreatorService;
 
 import org.apache.commons.text.WordUtils;
 import staticScrapeService.Item;
+import staticScrapeService.ItemSearch;
 import staticScrapeService.Spell;
+import staticScrapeService.SpellSearch;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -16,8 +19,14 @@ public class PlayerCharacter {
     private ArrayList<BaseClass> classes = new ArrayList<>();
     private ArrayList<String> classNames = new ArrayList<>();
     private HashMap<String, Integer> classLevels= new HashMap<>();
-    private ArrayList<Spell> spells;
-    private ArrayList<Item> items;
+    private boolean isSpellCaster = false;
+    private SpellSearch spellSearch = new SpellSearch();
+    private ArrayList<Spell> spells = new ArrayList<>();
+    private ArrayList<String> spellNames = new ArrayList<>();
+    private ItemSearch itemSearch = new ItemSearch();
+    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<String> itemNames = new ArrayList<>();
+
 
     public String getUniqueID () {
         return uniqueID;
@@ -67,12 +76,14 @@ public class PlayerCharacter {
         this.classLevels = pcjsonSkeleton.getClassLevels();
         for(String className : classLevels.keySet()) {
             this.classNames.add(className);
-            classes.add(new BaseClass(className, classLevels.get(className)));
+            BaseClass baseClass = new BaseClass(className, classLevels.get(className));
+            if(baseClass.getIsSpellCaster()) isSpellCaster = true;
+            classes.add(baseClass);
         }
     }
 
     public PCJSONSkeleton createPCJSONSkeleton() {
-        return new PCJSONSkeleton(uniqueID, name, totalLevels, race.getRaceName(), classLevels);
+        return new PCJSONSkeleton(uniqueID, name, totalLevels, race.getRaceName(), classLevels, spellNames, itemNames);
     }
 
     public void giveCharacterBaseClass(BaseClass baseClass) {
@@ -80,6 +91,7 @@ public class PlayerCharacter {
             return;
         }
         classes.add(baseClass);
+        if(baseClass.getIsSpellCaster()) isSpellCaster = true;
         classNames.add(baseClass.getClassName());
         setClassLevels(baseClass);
         totalLevels += baseClass.getClassLevel();
@@ -112,6 +124,32 @@ public class PlayerCharacter {
 
     private void setClassLevels(BaseClass baseClass) {
         classLevels.put(baseClass.getClassName(), baseClass.getClassLevel());
+    }
+
+    public void addSpell(String spellName) {
+
+        if(isSpellCaster == false) {
+            System.out.println(name + " is not a spellCaster.");
+            return;
+        }
+
+        Spell spell = (Spell) spellSearch.searchInfo(spellName);
+        boolean allowedSpell = false;
+        for(String className : classNames) {
+            if(spell.getAvailableClasses().contains(className)) {
+                allowedSpell = true;
+                break;
+            }
+        }
+        if(allowedSpell == false) {
+            System.out.println(spellName + " is not a spell that " + name + " can cast.");
+            return;
+        }
+
+        System.out.println(spellName + " is added to " + name + "'s spell list.");
+        spellNames.add(spellName);
+        spells.add(spell);
+
     }
 
     public void printCharacterDescriptionSummary() {
