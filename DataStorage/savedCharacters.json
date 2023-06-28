@@ -7,4 +7,53 @@
     "Fighter" : 5,
     "Barbarian" : 3
   }
+}, {
+  "uniqueID" : "47d4fb19-c9f2-4f8a-a46c-620256ab8379",
+  "name" : "Carta \"Erudition\"",
+  "totalLevels" : 1,
+  "raceName" : "Tiefling",
+  "classLevels" : {
+    "Warlock" : 1
+  }
+}, {
+  "uniqueID" : "4706eb24-9f2d-4abe-86d9-bb388ed04939",
+  "name" : "Dranir Stonehand",
+  "totalLevels" : 1,
+  "raceName" : "Dwarf",
+  "classLevels" : {
+    "Druid" : 1
+  }
+}, {
+  "uniqueID" : "bcacdcc2-1c51-4b94-ad84-1e82f6c422df",
+  "name" : "Ramnos \"Fast\"",
+  "totalLevels" : 3,
+  "raceName" : "Tiefling",
+  "classLevels" : {
+    "Rogue" : 3
+  }
+}, {
+  "uniqueID" : "7aca0f53-b0fb-490f-8f10-b57a471423b6",
+  "name" : "Zhen",
+  "totalLevels" : 1,
+  "raceName" : "Elf",
+  "classLevels" : {
+    "Sorcerer" : 1
+  }
+}, {
+  "uniqueID" : "362b911b-92b6-4e6c-b341-8200d07c97a9",
+  "name" : "Gonk",
+  "totalLevels" : 2,
+  "raceName" : "Half-orc",
+  "classLevels" : {
+    "Fighter" : 2
+  }
+}, {
+  "uniqueID" : "5476c63a-1897-4a54-a6e6-5e4473925149",
+  "name" : "Diatrina",
+  "totalLevels" : 6,
+  "raceName" : "Tiefling",
+  "classLevels" : {
+    "Sorcerer" : 2,
+    "Wizard" : 4
+  }
 } ]

@@ -53,8 +53,7 @@ public class MagicEntitySearchService extends SearchService {
                 if(childNode.getNodeName().equalsIgnoreCase("br")){
                     continue;
                 }
-                String formattedText = formatParagraphNodes(childNode.getTextContent(), childNode);
-                paragraphContent.append(formattedText);
+                paragraphContent.append(childNode.getTextContent());
             }
 
             if(node.getNodeName().contains("li")) { paragraphContent.insert(0, "   - "); }

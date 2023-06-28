@@ -17,7 +17,13 @@ public class CharacterCreationSaveFileEvents {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(file);
         PCJSONSkeleton pcjsonSkeleton = playerCharacter.createPCJSONSkeleton();
-        jsonCharacterWriter.addCharacterToFile(file, rootNode, pcjsonSkeleton);
+
+        if(jsonCharacterWriter.characterExists(file, playerCharacter.getUniqueID())) {
+            System.out.println("yes");
+            jsonCharacterWriter.overwriteCharacterInFile(file, rootNode, objectMapper, pcjsonSkeleton);
+            return;
+        }
+        jsonCharacterWriter.addCharacterToFile(file, rootNode, objectMapper, pcjsonSkeleton);
     }
 
     public ArrayList<PCJSONSkeleton> loadSavedPlayerCharacters() throws IOException {
@@ -33,4 +39,7 @@ public class CharacterCreationSaveFileEvents {
 
         return pcjsonSkeletons;
     }
+
+
+
 }

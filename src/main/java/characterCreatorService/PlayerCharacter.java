@@ -129,6 +129,16 @@ public class PlayerCharacter {
 
     }
 
+    public void printRaceFeatures() {
+        race.printRaceFeatures();
+    }
+
+    public void printClassFeatures() {
+        for(BaseClass baseClass : classes) {
+            baseClass.printAllCurrentClassFeatures();
+        }
+    }
+
     public void printCharacterDescriptionFull() {
         System.out.println(WordUtils.capitalizeFully(name));
         race.printRaceFeatures();
@@ -138,7 +148,11 @@ public class PlayerCharacter {
         }
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
-
-
+    public void setRace(Race race) {
+        this.race = race;
+    }
 }

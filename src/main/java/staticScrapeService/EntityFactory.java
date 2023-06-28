@@ -19,9 +19,7 @@ public abstract class EntityFactory {
             if(description.length() == 0) {
                 description = new StringBuilder(content);
             } else {
-                if(content.startsWith("-")) { description.append("\n").append(content);}
-                else {
-                    description.append("\n\n").append(content);}
+                description.append("\n").append(content);
             }
         }
         return description.toString();

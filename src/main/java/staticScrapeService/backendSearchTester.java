@@ -21,9 +21,6 @@ public class backendSearchTester {
 //        Item entity = (Item) itemSearch.searchInfo("Potion of Healing");
 //        Spell entity = (Spell) spellSearch.searchInfo("Wish");
 //
-        for(String desct : entity.getDescSections()) {
-            System.out.println(desct);
-        }
 //        entity.getDescSections();
 //        if(entity.isHasTable()){
 //            System.out.println(entity.getTableContent(0));

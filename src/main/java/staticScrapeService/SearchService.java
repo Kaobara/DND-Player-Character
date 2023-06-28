@@ -65,17 +65,6 @@ public abstract class SearchService {
         return nodes;
     }
 
-    // Some nodes has <em> and <strong> names to make content either italicized or bolded.
-    // This function manually changes forms a string with the appropriate tags for markdown
-    protected String formatParagraphNodes(String formattedText, DomNode node) {
-        if(node.getNodeName().contains("em")) {
-            formattedText = "_" + formattedText + "_";
-        } else if(node.getNodeName().contains("strong")) {
-            formattedText = "**" + formattedText + "**";
-        }
-        return formattedText;
-    }
-
     // Search up an entity based on its name. Uses above methods
     public abstract Entity searchInfo(String entityName);
 

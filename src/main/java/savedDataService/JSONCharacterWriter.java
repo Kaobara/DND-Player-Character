@@ -10,24 +10,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class JSONCharacterWriter {
-    public JsonNode characterExists(File file, String playerCharacterID) throws IOException {
+    public boolean characterExists(File file, String playerCharacterID) throws IOException {
+        System.out.println("Finding Saved Character with ID " + playerCharacterID);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode rootNode = mapper.readTree(file);
 
-        JsonNode finalNode = null;
-
         for(JsonNode characterNode : rootNode) {
-            if(characterNode.get("uniqueID").toString().equalsIgnoreCase(playerCharacterID)) {
-                finalNode = characterNode;
+            System.out.println("Unique ID for " + characterNode.get("name").toString() + " is " + characterNode.get("uniqueID").toString());
+            if(characterNode.get("uniqueID").toString().equalsIgnoreCase("\""+playerCharacterID+"\"")) {
+                return true;
             }
         }
 
-        return finalNode;
+        return false;
     }
 
-    public void addCharacterToFile(File file, JsonNode rootNode, PCJSONSkeleton pcJSONSkeleton) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-
+    public void addCharacterToFile(File file, JsonNode rootNode, ObjectMapper mapper, PCJSONSkeleton pcJSONSkeleton) throws IOException {
         ArrayNode editedNode = rootNode.deepCopy();
         editedNode.addPOJO(pcJSONSkeleton);
         mapper.writerWithDefaultPrettyPrinter()
@@ -48,18 +46,45 @@ public class JSONCharacterWriter {
         return nodes;
     }
 
-    public void removeChannelFromFile(File file, JsonNode rootNode, PCJSONSkeleton pcJSONSkeleton) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+    public void removeCharacterFromFile(File file, JsonNode rootNode, ObjectMapper mapper, PCJSONSkeleton pcJSONSkeleton) throws IOException {
         ArrayNode editedNode = rootNode.deepCopy();
+        pcJSONSkeleton.printPCDescription();
         for(int i = 0; i <editedNode.size(); i++) {
-            if(editedNode.get("uniqueID").toString().equalsIgnoreCase(pcJSONSkeleton.getUniqueID())) {
+            if(editedNode.get(i).get("uniqueID").toString()
+                    .equalsIgnoreCase("\"" + pcJSONSkeleton.getUniqueID() + "\"")) {
                 editedNode.remove(i);
                 System.out.println("REMOVE SUCCESSFUL");
                 break;
             }
         }
+        for(int i = 0; i <editedNode.size(); i++) {
+            System.out.println(editedNode.get(i).get("uniqueID").toString());
+            System.out.println(editedNode.get(i).get("name").toString());
+        }
 
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(file, editedNode);
+    }
+
+    public void overwriteCharacterInFile(File file, JsonNode rootNode, ObjectMapper mapper, PCJSONSkeleton pcJSONSkeleton) throws IOException {
+        ArrayNode editedNode = rootNode.deepCopy();
+        pcJSONSkeleton.printPCDescription();
+        for(int i = 0; i <editedNode.size(); i++) {
+            if(editedNode.get(i).get("uniqueID").toString()
+                    .equalsIgnoreCase("\"" + pcJSONSkeleton.getUniqueID() + "\"")) {
+                editedNode.remove(i);
+                System.out.println("REMOVE SUCCESSFUL");
+                break;
+            }
+        }
+        for(int i = 0; i <editedNode.size(); i++) {
+            System.out.println(editedNode.get(i).get("uniqueID").toString());
+            System.out.println(editedNode.get(i).get("name").toString());
+        }
+        editedNode.addPOJO(pcJSONSkeleton);
+
+        mapper.writerWithDefaultPrettyPrinter()
+                .writeValue(file, editedNode);
+
     }
 }

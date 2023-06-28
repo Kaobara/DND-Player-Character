@@ -35,11 +35,14 @@ public class MainController {
                 case CHARACTER_EDITING_CURRENT:
                     if(playerCharacter == null) {
                         System.out.println("You have not created or saved a new character yet. Please try again");
+                    } else {
+                        playerCharacter = characterCreationEvents.editSavedCharacter(playerCharacter);
                     }
                     currentState = ProgramState.CHOOSING_STATE;
                     break;
                 case CHARACTER_EDITING_DIFFERENT:
-                    playerCharacter = characterCreationEvents.editSavedCharacter();
+                    playerCharacter = characterCreationEvents.chooseSavedCharacter();
+                    playerCharacter = characterCreationEvents.editSavedCharacter(playerCharacter);
                     currentState = ProgramState.CHOOSING_STATE;
                     break;
                 case CLOSE_PROGRAM:
