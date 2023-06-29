@@ -15,17 +15,6 @@
     "Druid" : 1
   }
 }, {
-  "uniqueID" : "5476c63a-1897-4a54-a6e6-5e4473925149",
-  "name" : "Dia",
-  "totalLevels" : 7,
-  "raceName" : "Tiefling",
-  "classLevels" : {
-    "Sorcerer" : 3,
-    "Wizard" : 4
-  },
-  "spellNames" : [ "Fireball" ],
-  "itemNames" : [ ]
-}, {
   "uniqueID" : "dbbbe529-6379-4f05-ab0c-5511f211d5f9",
   "name" : "Alexa",
   "totalLevels" : 8,
@@ -37,26 +26,6 @@
   "spellNames" : [ ],
   "itemNames" : [ ]
 }, {
-  "uniqueID" : "e52e1289-40f6-409a-a4d9-c6ef74bc05a4",
-  "name" : "Remina",
-  "totalLevels" : 1,
-  "raceName" : "Half-elf",
-  "classLevels" : {
-    "Barbarian" : 1
-  },
-  "spellNames" : [ ],
-  "itemNames" : [ ]
-}, {
-  "uniqueID" : "94323fbc-fbc4-487f-b11d-351848ea3877",
-  "name" : "Bobby",
-  "totalLevels" : 1,
-  "raceName" : "Tiefling",
-  "classLevels" : {
-    "Cleric" : 1
-  },
-  "spellNames" : [ "Bless" ],
-  "itemNames" : [ "Potion Of Healing" ]
-}, {
   "uniqueID" : "362b911b-92b6-4e6c-b341-8200d07c97a9",
   "name" : "Gonk",
   "totalLevels" : 2,
@@ -67,16 +36,6 @@
   "spellNames" : [ ],
   "itemNames" : [ "Bag Of Holding" ]
 }, {
-  "uniqueID" : "fe058c7a-dcb3-4ea8-bbde-bf5caffc3e13",
-  "name" : "Morrigan",
-  "totalLevels" : 1,
-  "raceName" : "Human",
-  "classLevels" : {
-    "Monk" : 1
-  },
-  "spellNames" : [ ],
-  "itemNames" : [ ]
-}, {
   "uniqueID" : "7aca0f53-b0fb-490f-8f10-b57a471423b6",
   "name" : "Zhen",
   "totalLevels" : 1,
@@ -85,17 +44,6 @@
     "Sorcerer" : 1
   },
   "spellNames" : [ "Burning Hands" ],
-  "itemNames" : [ ]
-}, {
-  "uniqueID" : "b7a92591-4aae-413e-8cc2-49bd10cab03e",
-  "name" : "Droop",
-  "totalLevels" : 3,
-  "raceName" : "Halfling",
-  "classLevels" : {
-    "Wizard" : 1,
-    "Bard" : 2
-  },
-  "spellNames" : [ ],
   "itemNames" : [ ]
 }, {
   "uniqueID" : "47d4fb19-c9f2-4f8a-a46c-620256ab8379",
