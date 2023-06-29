@@ -124,9 +124,6 @@ public class ClassFeatureSearch extends SearchService {
             if(correctSpace == false) continue;
             StringBuilder paragraphContent = new StringBuilder();
 
-            // Some nodes contain child nodes that usually includes data of its text format (bold or italicized)
-            // This for block allows those paragraph to be in the proper format
-            // Note: This does not work on anything that is both bolded or italicized
             for(DomNode childNode : node.getChildNodes()) {
                 if(childNode.getNodeName().equalsIgnoreCase("br")){
                     continue;
@@ -144,8 +141,6 @@ public class ClassFeatureSearch extends SearchService {
     protected ArrayList<String> getListOfEntities(HtmlPage page, String entityFeatureType) {
         return getListOfFeatures(page);
     }
-
-//    public Entity searchInfo(String featureName) { return null; }
 
     public Entity searchInfo( String featureName) {
         featureName = featureName.toLowerCase();

@@ -3,6 +3,7 @@ package characterCreatorService;
 import java.util.ArrayList;
 
 public class BaseClassInfo {
+    // TODO make this into a singleton
     private final ArrayList<String> classList = new ArrayList<String>() {
         {
             add("artificer");

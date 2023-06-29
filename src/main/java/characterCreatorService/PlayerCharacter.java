@@ -6,7 +6,6 @@ import staticScrapeService.ItemSearch;
 import staticScrapeService.Spell;
 import staticScrapeService.SpellSearch;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -20,10 +19,10 @@ public class PlayerCharacter {
     private ArrayList<String> classNames = new ArrayList<>();
     private HashMap<String, Integer> classLevels= new HashMap<>();
     private boolean isSpellCaster = false;
-    private SpellSearch spellSearch = new SpellSearch();
+    private final SpellSearch spellSearch = new SpellSearch();
     private ArrayList<Spell> spells = new ArrayList<>();
     private ArrayList<String> spellNames = new ArrayList<>();
-    private ItemSearch itemSearch = new ItemSearch();
+    private final ItemSearch itemSearch = new ItemSearch();
     private ArrayList<Item> items = new ArrayList<>();
     private ArrayList<String> itemNames = new ArrayList<>();
 
@@ -48,14 +47,6 @@ public class PlayerCharacter {
         return classNames;
     }
 
-    public HashMap<String, Integer> getClassLevels() {
-        return classLevels;
-    }
-
-    private Race getRace() {
-        return race;
-    }
-
     public int getLevelInClass(String className) {
         int baseClassIndex = getClassIndexInList(className);
         if (baseClassIndex == -1) return -1;
@@ -68,6 +59,7 @@ public class PlayerCharacter {
         this.uniqueID = UUID.randomUUID().toString();
     }
 
+    // PCJSONSkeleton-related methods
     public PlayerCharacter(PCJSONSkeleton pcjsonSkeleton) {
         this.uniqueID = pcjsonSkeleton.getUniqueID();
         this.name = pcjsonSkeleton.getName();
@@ -102,6 +94,7 @@ public class PlayerCharacter {
         return new PCJSONSkeleton(uniqueID, name, totalLevels, race.getRaceName(), classLevels, spellNames, itemNames);
     }
 
+    // Class related methods
     public void giveCharacterBaseClass(BaseClass baseClass) {
         if(classes.contains(baseClass)) {
             return;
@@ -142,8 +135,9 @@ public class PlayerCharacter {
         classLevels.put(baseClass.getClassName(), baseClass.getClassLevel());
     }
 
+    // Spells and items
     public void addSpell(String spellName) {
-        if(isSpellCaster == false) {
+        if(!isSpellCaster) {
             System.out.println(name + " is not a spellCaster.");
             return;
         }
@@ -156,7 +150,7 @@ public class PlayerCharacter {
                 break;
             }
         }
-        if(allowedSpell == false) {
+        if(!allowedSpell) {
             System.out.println(spellName + " is not a spell that " + name + " can cast.");
             return;
         }
@@ -186,6 +180,7 @@ public class PlayerCharacter {
 
     }
 
+    // Printing related methods
     public void printCharacterDescriptionSummary() {
         System.out.print(WordUtils.capitalizeFully(name) + " is a ");
         for(int i=0; i<classes.size(); i++) {
@@ -235,7 +230,6 @@ public class PlayerCharacter {
     public void printCharacterDescriptionFull() {
         System.out.println(WordUtils.capitalizeFully(name));
         race.printRaceFeatures();
-        System.out.println("");
         for(BaseClass baseClass : classes) {
             baseClass.printAllCurrentClassFeatures();
         }

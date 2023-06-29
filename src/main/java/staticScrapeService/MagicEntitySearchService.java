@@ -11,9 +11,6 @@ import java.util.List;
 public class MagicEntitySearchService extends SearchService {
     protected String ENTITY_LIST_URL;
 
-//    protected ArrayList<String> getListOfEntities(HtmlPage page, String entityFeatureType) {
-//        return getListOfEntities(page, entityFeatureType);
-//    }
 
     // Using an HtmlPage, this function returns a sorted list of all entities
     // This is primarily used to find a list of all spells or items for checking correct input
@@ -45,10 +42,6 @@ public class MagicEntitySearchService extends SearchService {
 
         for(DomNode node : nodes) {
             StringBuilder paragraphContent = new StringBuilder();
-
-            // Some nodes contain child nodes that usually includes data of its text format (bold or italicized)
-            // This for block allows those paragraph to be in the proper format
-            // Note: This does not work on anything that is both bolded or italicized
             for(DomNode childNode : node.getChildNodes()) {
                 if(childNode.getNodeName().equalsIgnoreCase("br")){
                     continue;

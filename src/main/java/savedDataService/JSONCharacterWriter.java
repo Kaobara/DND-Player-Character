@@ -10,13 +10,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class JSONCharacterWriter {
+    // If a character exists in the save file, return true
     public boolean characterExists(File file, String playerCharacterID) throws IOException {
-        System.out.println("Finding Saved Character with ID " + playerCharacterID);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode rootNode = mapper.readTree(file);
 
         for(JsonNode characterNode : rootNode) {
-            System.out.println("Unique ID for " + characterNode.get("name").toString() + " is " + characterNode.get("uniqueID").toString());
             if(characterNode.get("uniqueID").toString().equalsIgnoreCase("\""+playerCharacterID+"\"")) {
                 return true;
             }
@@ -25,6 +24,7 @@ public class JSONCharacterWriter {
         return false;
     }
 
+    // Add a newly made character into the save file
     public void addCharacterToFile(File file, JsonNode rootNode, ObjectMapper mapper, PCJSONSkeleton pcJSONSkeleton) throws IOException {
         ArrayNode editedNode = rootNode.deepCopy();
         editedNode.addPOJO(pcJSONSkeleton);
@@ -46,6 +46,7 @@ public class JSONCharacterWriter {
         return nodes;
     }
 
+    // entirely remove a character from the save file
     public void removeCharacterFromFile(File file, JsonNode rootNode, ObjectMapper mapper, PCJSONSkeleton pcJSONSkeleton) throws IOException {
         ArrayNode editedNode = rootNode.deepCopy();
         pcJSONSkeleton.printPCDescription();
@@ -57,15 +58,12 @@ public class JSONCharacterWriter {
                 break;
             }
         }
-        for(int i = 0; i <editedNode.size(); i++) {
-            System.out.println(editedNode.get(i).get("uniqueID").toString());
-            System.out.println(editedNode.get(i).get("name").toString());
-        }
 
         mapper.writerWithDefaultPrettyPrinter()
                 .writeValue(file, editedNode);
     }
 
+    // Overwrite a character from a save file if they were modified
     public void overwriteCharacterInFile(File file, JsonNode rootNode, ObjectMapper mapper, PCJSONSkeleton pcJSONSkeleton) throws IOException {
         ArrayNode editedNode = rootNode.deepCopy();
         pcJSONSkeleton.printPCDescription();
@@ -73,13 +71,8 @@ public class JSONCharacterWriter {
             if(editedNode.get(i).get("uniqueID").toString()
                     .equalsIgnoreCase("\"" + pcJSONSkeleton.getUniqueID() + "\"")) {
                 editedNode.remove(i);
-                System.out.println("REMOVE SUCCESSFUL");
                 break;
             }
-        }
-        for(int i = 0; i <editedNode.size(); i++) {
-            System.out.println(editedNode.get(i).get("uniqueID").toString());
-            System.out.println(editedNode.get(i).get("name").toString());
         }
         editedNode.addPOJO(pcJSONSkeleton);
 

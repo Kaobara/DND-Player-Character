@@ -10,21 +10,22 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CharacterEditingEvents {
-    private BaseClassInfo baseClassInfo = new BaseClassInfo();
-    private Scanner inputScanner = new Scanner(System.in);
-    private CharacterCreationSaveFileEvents PCSaveFileEvents = new CharacterCreationSaveFileEvents();
-    private SpellSearch spellSearch = new SpellSearch();
-    private ItemSearch itemSearch = new ItemSearch();
+    private final BaseClassInfo baseClassInfo = new BaseClassInfo();
+    private final Scanner inputScanner = new Scanner(System.in);
+    private final CharacterCreationSaveFileEvents PCSaveFileEvents = new CharacterCreationSaveFileEvents();
+    private final SpellSearch spellSearch = new SpellSearch();
+    private final ItemSearch itemSearch = new ItemSearch();
 
+    // Edit a saved character based on options
     public PlayerCharacter editSavedCharacter(PlayerCharacter playerCharacter) throws IOException {
-        int editOption = -1;
+        int editOption;
         boolean saveOption = false;
-        while(editOption != 0) {
+        while(true) {
             editOption = chooseEditOption(playerCharacter);
             switch (editOption) {
                 case 1:
                     // Edit Name
-                    editPCName(playerCharacter);
+                    playerCharacter = editPCName(playerCharacter);
                     saveOption = true;
                     break;
                 case 2:
@@ -33,7 +34,7 @@ public class CharacterEditingEvents {
                     break;
                 case 3:
                     // Edit Race
-                    editPCRace(playerCharacter);
+                    playerCharacter = editPCRace(playerCharacter);
                     saveOption = true;
                     break;
                 case 4:
@@ -56,27 +57,24 @@ public class CharacterEditingEvents {
                     playerCharacter.printSpellDescriptions();
                     break;
                 case 8:
+                    // Add spell to character
                     playerCharacter = addSpellToCharacter(playerCharacter);
                     saveOption = true;
                     break;
                 case 9:
+                    // See item descriptions
                     playerCharacter.printItemDescrptions();
                     break;
                 case 10:
+                    // Add item to character
                     addItemToCharacter(playerCharacter);
                     saveOption = true;
-                    break;
-                case 11:
-                    editPCName(playerCharacter);
-                    break;
-                case 12:
-                    editPCName(playerCharacter);
                     break;
             }
 
             if(editOption == 0) break;
         }
-        if(saveOption == true) {
+        if(saveOption) {
             inputScanner.nextLine();
             savePlayerCharacterEvent(playerCharacter);
         }
@@ -84,8 +82,9 @@ public class CharacterEditingEvents {
         return playerCharacter;
     }
 
+    // Command line method for choosing an option to edit a character
     private int chooseEditOption(PlayerCharacter playerCharacter) {
-        int editOption = -1;
+        int editOption;
         while(true) {
             playerCharacter.printCharacterDescriptionSummary();
             System.out.println("How would you like to edit " + playerCharacter.getName() + "? Please choose from " +
@@ -112,10 +111,20 @@ public class CharacterEditingEvents {
                 inputScanner.nextLine();
             }
         }
-//        inputScanner.nextLine();
         return editOption;
     }
 
+    // Command line event to edit the name of a player character
+    public PlayerCharacter editPCName(PlayerCharacter playerCharacter) {
+        System.out.println("The character's name is currently " + playerCharacter.getName() + "\nPlease enter a new name: ");
+        inputScanner.nextLine();
+        String newName = inputScanner.nextLine();
+        System.out.println("Named changed from " + playerCharacter.getName() + " to " + newName);
+        playerCharacter.setName(newName);
+        return playerCharacter;
+    }
+
+    // Command line event to build a race
     public Race buildRace() {
         System.out.println("Please choose a race. The available races are: ");
         Race race = new Race();
@@ -132,15 +141,7 @@ public class CharacterEditingEvents {
         return race;
     }
 
-    public PlayerCharacter editPCName(PlayerCharacter playerCharacter) {
-        System.out.println("The character's name is currently " + playerCharacter.getName() + "\nPlease enter a new name: ");
-        inputScanner.nextLine();
-        String newName = inputScanner.nextLine();
-        System.out.println("Named changed from " + playerCharacter.getName() + " to " + newName);
-        playerCharacter.setName(newName);
-        return playerCharacter;
-    }
-
+    // Command line event to change the race of a PC
     public PlayerCharacter editPCRace(PlayerCharacter playerCharacter) {
         System.out.println(playerCharacter.getName() + "'s race is currently " + playerCharacter.getRaceName());
         inputScanner.nextLine();
@@ -150,6 +151,7 @@ public class CharacterEditingEvents {
         return playerCharacter;
     }
 
+    // Command line event to build a player character class
     public PlayerCharacter buildBaseClass(PlayerCharacter playerCharacter) {
         System.out.println("Please choose a Class. The available classes are: ");
         baseClassInfo.printClassList();
@@ -181,7 +183,7 @@ public class CharacterEditingEvents {
 
         System.out.println("How many " + className + " levels does " + playerCharacter.getName() + " have? Maximum of 20 levels.");
         System.out.println(playerCharacter.getName() + " currently has " + playerCharacter.getTotalLevels() + " levels");
-        int classLevel = -1;
+        int classLevel;
         while(true) {
             try {
                 classLevel = inputScanner.nextInt();
@@ -200,8 +202,9 @@ public class CharacterEditingEvents {
         inputScanner.nextLine();
 
         return playerCharacter;
-    };
+    }
 
+    // Command line event for choosing a class to level up
     public String chooseLevelUpClass(PlayerCharacter playerCharacter) {
         System.out.println(playerCharacter.getName() + " currently has levels in: ");
         ArrayList<String> classNames = playerCharacter.getClassNames();
@@ -224,11 +227,12 @@ public class CharacterEditingEvents {
         return classToLevelUp;
     }
 
+    // Command line event to level up a class
     public PlayerCharacter levelUpClass(PlayerCharacter playerCharacter, String className) {
         System.out.println(playerCharacter.getName() + " is currently level " + playerCharacter.getTotalLevels()
                 + " and has " + playerCharacter.getLevelInClass(className) + " in " + className);
         System.out.println("How many levels of " + className + " would you like to level up?");
-        int classLevelIncrease = 0;
+        int classLevelIncrease;
         while(true) {
             try {
                 classLevelIncrease = inputScanner.nextInt();
@@ -249,8 +253,8 @@ public class CharacterEditingEvents {
         return playerCharacter;
     }
 
+    // Command line event to add a spell to a character
     private PlayerCharacter addSpellToCharacter(PlayerCharacter playerCharacter) {
-
         while(true) {
             System.out.println("What spell would you like to add? Some spells include:" +
                     "\n- Eldritch Blast\n- Fire Bolt\n- Bless\n- Vicious Mockery\n- Fireball" +
@@ -270,6 +274,7 @@ public class CharacterEditingEvents {
         return playerCharacter;
     }
 
+    // Command line event to add an item to a player character
     private PlayerCharacter addItemToCharacter(PlayerCharacter playerCharacter) {
         while(true) {
             System.out.println("What magic item would you like to add? Some items include:" +
@@ -290,6 +295,7 @@ public class CharacterEditingEvents {
         return playerCharacter;
     }
 
+    // Command line event to save a player character to the save file
     public void savePlayerCharacterEvent(PlayerCharacter playerCharacter) throws IOException {
         while(true) {
             System.out.println("Would you like to save changes? (Y/N)");
@@ -307,6 +313,7 @@ public class CharacterEditingEvents {
         }
     }
 
+    // Command line event to fully load up a player character
     public ArrayList<PCJSONSkeleton> loadSavedPlayerCharacters() throws IOException {
         return PCSaveFileEvents.loadSavedPlayerCharacters();
     }

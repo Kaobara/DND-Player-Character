@@ -50,7 +50,6 @@ public class CharacterCreationEvents {
                     programState = ProgramState.CHARACTER_EDITING_CURRENT;
                 } else if (intState == 2) {
                     programState = ProgramState.CHARACTER_EDITING_DIFFERENT;
-                    System.out.println("hm");
                 } else if (intState == 3) {
                     programState = ProgramState.CHARACTER_CREATION;
                 } else {
@@ -64,7 +63,6 @@ public class CharacterCreationEvents {
             }
         }
         inputScanner.nextLine();
-        System.out.println("the current state is: " + programState.toString());
         return programState;
     }
 
@@ -111,6 +109,7 @@ public class CharacterCreationEvents {
         for(PCJSONSkeleton savedCharacter : savedCharacters) {
             System.out.print("(" + savedCharacters.indexOf(savedCharacter) + ") ");
             savedCharacter.printPCDescription();
+            System.out.println();
         }
 
         int chosenCharacterIndex = -1;

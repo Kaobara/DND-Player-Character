@@ -1,26 +1,16 @@
 package characterCreatorService;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import savedDataService.JSONCharacterWriter;
-
-import java.io.File;
 import java.io.IOException;
 
 public class MainController {
-    private String characterName;
-
-
-
-
-    public static void main(String args[] ) throws IOException {
+    public static void main(String[] args ) throws IOException {
         CharacterCreationEvents characterCreationEvents = new CharacterCreationEvents();
-        JSONCharacterWriter jsonCharacterWriter = new JSONCharacterWriter();
         PlayerCharacter playerCharacter = null;
         ProgramState currentState = ProgramState.BOOT_UP;
         boolean programLive = true;
+
+        // Change and execute events depending on the current state.
         while(programLive) {
-            System.out.println("Start of loop. Current state is now: " + currentState.toString());
             switch (currentState) {
                 case CHOOSING_STATE:
                     currentState = characterCreationEvents.choosePlayerCharacterState();
@@ -49,30 +39,7 @@ public class MainController {
                     programLive = false;
                     break;
             }
-            System.out.println("The state is now: " + currentState.toString());
         }
-
-//        if(currentState == ProgramState.CHARACTER_CREATION) {
-//            playerCharacter = characterCreationEvents.buildNewCharacter();
-//        }
-
-//        String channelDataDirectory = "DataStorage/savedCharacters.json";
-//
-//        File file = new File(channelDataDirectory);
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        JsonNode rootNode = objectMapper.readTree(file);
-//
-//        PCJSONSkeleton pcjsonSkeleton = playerCharacter.createPCJSONSkeleton();
-//
-//        jsonCharacterWriter.addCharacterToFile(file, rootNode, pcjsonSkeleton);
-
-
-
-
-
-
-
-        return;
     }
 
 

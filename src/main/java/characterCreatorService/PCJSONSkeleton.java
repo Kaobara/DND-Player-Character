@@ -1,12 +1,7 @@
 package characterCreatorService;
 
-import org.apache.commons.text.WordUtils;
-import staticScrapeService.Item;
-import staticScrapeService.Spell;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
 
 public class PCJSONSkeleton {
     private String uniqueID;
@@ -68,7 +63,6 @@ public class PCJSONSkeleton {
         for(String className : classLevels.keySet()) {
             System.out.print("level " + classLevels.get(className) + " " + className + " ");
         }
-        System.out.println("");
     }
 
 }

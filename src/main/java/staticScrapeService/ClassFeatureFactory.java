@@ -10,9 +10,6 @@ public class ClassFeatureFactory extends EntityFactory {
                                      String baseClass, int classLevel) {
         String description = getDescription(fullContent);
         ClassFeature classFeature = new ClassFeature(classFeatureName, "", baseClass, classLevel, description);
-//        if(tables != null){
-//            ClassFeature.addTablesIntoEntity(tables);
-//        }
         return classFeature;
     }
 

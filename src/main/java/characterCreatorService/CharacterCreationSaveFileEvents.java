@@ -12,6 +12,7 @@ public class CharacterCreationSaveFileEvents {
     private final String channelDataDirectory = "DataStorage/savedCharacters.json";
     private final JSONCharacterWriter jsonCharacterWriter = new JSONCharacterWriter();
 
+    // Save a player character into the save file
     public void savePlayerCharacter(PlayerCharacter playerCharacter) throws IOException {
         File file = new File(channelDataDirectory);
         ObjectMapper objectMapper = new ObjectMapper();
@@ -26,6 +27,7 @@ public class CharacterCreationSaveFileEvents {
         jsonCharacterWriter.addCharacterToFile(file, rootNode, objectMapper, pcjsonSkeleton);
     }
 
+    // Load up all saved player character as JSON skeletons.
     public ArrayList<PCJSONSkeleton> loadSavedPlayerCharacters() throws IOException {
         ArrayList<PCJSONSkeleton> pcjsonSkeletons = new ArrayList<>();
         File file = new File(channelDataDirectory);
@@ -34,12 +36,9 @@ public class CharacterCreationSaveFileEvents {
         ArrayList<JsonNode> characterNodes = jsonCharacterWriter.getCharacterNodes(file);
         for(JsonNode characterNode : characterNodes) {
             pcjsonSkeletons.add(objectMapper.readValue(characterNode.toPrettyString(), PCJSONSkeleton.class));
-            System.out.println(characterNode.toPrettyString());
         }
 
         return pcjsonSkeletons;
     }
-
-
 
 }
