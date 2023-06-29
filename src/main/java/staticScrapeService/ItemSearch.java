@@ -2,6 +2,8 @@ package staticScrapeService;
 
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
+import java.util.ArrayList;
+
 public class ItemSearch extends MagicEntitySearchService {
 
 //    Sets up the EntitySearch to be Item specific
@@ -13,4 +15,5 @@ public class ItemSearch extends MagicEntitySearchService {
         super.entityList = this.getListOfEntities(itemListPage, "Item");
     }
 
+    public ArrayList<String> getItemList() { return super.entityList; }
 }

@@ -51,16 +51,20 @@ public class CharacterEditingEvents {
                     playerCharacter = buildBaseClass(playerCharacter);
                     saveOption = true;
                     break;
-                    case 7:
+                case 7:
+                    // See spell descriptions
+                    playerCharacter.printSpellDescriptions();
+                    break;
                 case 8:
                     playerCharacter = addSpellToCharacter(playerCharacter);
                     saveOption = true;
                     break;
                 case 9:
-                    editPCName(playerCharacter);
+                    playerCharacter.printItemDescrptions();
                     break;
                 case 10:
-                    editPCName(playerCharacter);
+                    addItemToCharacter(playerCharacter);
+                    saveOption = true;
                     break;
                 case 11:
                     editPCName(playerCharacter);
@@ -108,7 +112,7 @@ public class CharacterEditingEvents {
                 inputScanner.nextLine();
             }
         }
-        inputScanner.nextLine();
+//        inputScanner.nextLine();
         return editOption;
     }
 
@@ -155,6 +159,7 @@ public class CharacterEditingEvents {
             if(baseClassInfo.checkClass(className)) break;
             System.out.println("Sorry, the class " + className + " is unavailable. Please try again.");
         }
+        className = WordUtils.capitalizeFully(className);
         System.out.println("You chose the class: " + className);
 
         if(playerCharacter.getClassNames().contains(className)) {
@@ -208,6 +213,7 @@ public class CharacterEditingEvents {
         inputScanner.nextLine();
         while(true) {
             classToLevelUp = inputScanner.nextLine();
+            classToLevelUp = WordUtils.capitalizeFully(classToLevelUp);
             if(classNames.contains(classToLevelUp)) {
                 System.out.println("Leveling up in " + classToLevelUp);
                 break;
@@ -248,7 +254,7 @@ public class CharacterEditingEvents {
         while(true) {
             System.out.println("What spell would you like to add? Some spells include:" +
                     "\n- Eldritch Blast\n- Fire Bolt\n- Bless\n- Vicious Mockery\n- Fireball" +
-                    "\n- Mage Hand\n- Speak with Animals\n -etc.");
+                    "\n- Mage Hand\n- Speak with Animals\n- etc.");
             inputScanner.nextLine();
             String spellName = inputScanner.nextLine();
             spellName = spellName.toLowerCase();
@@ -256,6 +262,26 @@ public class CharacterEditingEvents {
 
             if(spellSearch.getSpellList().contains(spellName)) {
                 playerCharacter.addSpell(spellName);
+                break;
+            } else {
+                System.out.println("Invalid Input. Please try again");
+            }
+        }
+        return playerCharacter;
+    }
+
+    private PlayerCharacter addItemToCharacter(PlayerCharacter playerCharacter) {
+        while(true) {
+            System.out.println("What magic item would you like to add? Some items include:" +
+                    "\n- Potion of Healing\n- Bead of Nourishment\n- Masquerade Tattoo\n- Cloak of Elvenkind\n- Bag of Holding" +
+                    "\n- Potion of Invisibility\n- Moonblade\n -etc.");
+            inputScanner.nextLine();
+            String itemName = inputScanner.nextLine();
+            itemName = itemName.toLowerCase();
+            itemName = WordUtils.capitalizeFully(itemName);
+
+            if(itemSearch.getItemList().contains(itemName)) {
+                playerCharacter.addItem(itemName);
                 break;
             } else {
                 System.out.println("Invalid Input. Please try again");

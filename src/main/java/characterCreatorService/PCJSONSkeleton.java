@@ -14,8 +14,8 @@ public class PCJSONSkeleton {
     private int totalLevels = 0;
     private String raceName;
     private HashMap<String, Integer> classLevels= new HashMap<>();
-    private ArrayList<String> spellNames;
-    private ArrayList<String> itemNames;
+    private ArrayList<String> spellNames = new ArrayList<>();
+    private ArrayList<String> itemNames = new ArrayList<>();
 
     public PCJSONSkeleton() {}
 
@@ -58,7 +58,7 @@ public class PCJSONSkeleton {
     public void setClassLevels(HashMap<String, Integer> classLevels) { this.classLevels = classLevels; }
 
     public ArrayList<String> getSpellNames() { return spellNames; }
-    public void setSpellNames(ArrayList<String> SpellNames) { this.spellNames = spellNames; }
+    public void setSpellNames(ArrayList<String> spellNames) { this.spellNames = spellNames; }
 
     public ArrayList<String> getItemNames() { return itemNames; }
     public void setItemNames(ArrayList<String> itemNames) { this.itemNames = itemNames; }

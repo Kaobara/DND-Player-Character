@@ -13,4 +13,10 @@ public class Item extends  Entity{
     public String getTypeRarity() {
         return typeRarity;
     }
+
+    public void printFullItemDescription() {
+        System.out.println(super.getName().toUpperCase());
+        System.out.println(typeRarity);
+        System.out.println(getDescription());
+    }
 }

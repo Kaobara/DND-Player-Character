@@ -59,4 +59,9 @@ public class Spell extends Entity {
     public boolean isRitual() { return ritual; }
     public boolean isConcentration() { return concentration; }
 
+    public void printFullSpellDescription() {
+        System.out.println(super.getName().toUpperCase());
+        System.out.println(getDescription());
+    }
+
 }

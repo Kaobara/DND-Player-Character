@@ -19,7 +19,7 @@ public class backendSearchTester {
         SpellSearch spellSearch = new SpellSearch();
 //        ItemSearch itemSearch = new ItemSearch();
 //        Item entity = (Item) itemSearch.searchInfo("Potion of Healing");
-        Spell entity = (Spell) spellSearch.searchInfo("fire bolt");
+        Spell entity = (Spell) spellSearch.searchInfo("Eldritch Blast");
         System.out.println(entity.getDescription());
 //
 //        entity.getDescSections();

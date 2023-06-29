@@ -41,6 +41,7 @@ public class CharacterCreationEvents {
                     "edit another existing character (2), create a brand new character (3), " +
                     "or close the program (0)?\n" +
                     "Please choose an option");
+
             try {
                 int intState = inputScanner.nextInt();
                 if (intState == 0 ){
@@ -62,11 +63,10 @@ public class CharacterCreationEvents {
                 inputScanner.nextLine();
             }
         }
+        inputScanner.nextLine();
         System.out.println("the current state is: " + programState.toString());
         return programState;
     }
-
-
 
     public PlayerCharacter buildNewCharacter() throws IOException {
         // Name

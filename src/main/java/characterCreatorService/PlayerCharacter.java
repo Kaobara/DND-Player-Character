@@ -80,6 +80,22 @@ public class PlayerCharacter {
             if(baseClass.getIsSpellCaster()) isSpellCaster = true;
             classes.add(baseClass);
         }
+
+        this.spellNames = pcjsonSkeleton.getSpellNames();
+        if(!spellNames.isEmpty()) {
+            for(String spellName :spellNames) {
+                Spell spell = (Spell) spellSearch.searchInfo(spellName);
+                spells.add(spell);
+            }
+        }
+
+        this.itemNames = pcjsonSkeleton.getItemNames();
+        if(!itemNames.isEmpty()) {
+            for(String itemName : itemNames) {
+                Item item = (Item) itemSearch.searchInfo(itemName);
+                items.add(item);
+            }
+        }
     }
 
     public PCJSONSkeleton createPCJSONSkeleton() {
@@ -127,7 +143,6 @@ public class PlayerCharacter {
     }
 
     public void addSpell(String spellName) {
-
         if(isSpellCaster == false) {
             System.out.println(name + " is not a spellCaster.");
             return;
@@ -146,9 +161,28 @@ public class PlayerCharacter {
             return;
         }
 
+        if(spellNames.contains(spellName)) {
+            System.out.println(name + " already has " + spellName + " in their spell list.");
+            return;
+        }
+
         System.out.println(spellName + " is added to " + name + "'s spell list.");
         spellNames.add(spellName);
         spells.add(spell);
+
+    }
+
+    public void addItem(String itemName) {
+        Item item = (Item) itemSearch.searchInfo(itemName);
+
+        if(itemNames.contains(itemName)) {
+            System.out.println(name + " already has " + itemName + " in their inventory.");
+            return;
+        }
+
+        System.out.println(itemName + " is added to " + name + "'s inventory.");
+        itemNames.add(itemName);
+        items.add(item);
 
     }
 
@@ -175,6 +209,27 @@ public class PlayerCharacter {
         for(BaseClass baseClass : classes) {
             baseClass.printAllCurrentClassFeatures();
         }
+    }
+
+    public void printSpellDescriptions() {
+        if(spells.isEmpty()) {
+            System.out.println(name + " cannot cast any spells");
+            return;
+        }
+        for(Spell spell : spells) {
+            spell.printFullSpellDescription();
+        }
+    }
+
+    public void printItemDescrptions() {
+        if(items.isEmpty()) {
+            System.out.println(name + " has no items in their inventory");
+            return;
+        }
+        for(Item item : items) {
+            item.printFullItemDescription();
+        }
+
     }
 
     public void printCharacterDescriptionFull() {
